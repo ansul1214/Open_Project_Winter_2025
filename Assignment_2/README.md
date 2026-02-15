@@ -1,9 +1,60 @@
-# Open_Project_Winter_2025
-This repository outlines my Machine learning in quantum tomography assignments week wise and even the final consolidated project repository as of now I have completed the first assignment in which Pauli projective methodology is used for  measurement and later on data is generated for single qubit systems as of now which will be extended to multi-qubit in upcoming week the data are saved in npy form and trace and fiedlity for single qubit are analysed and even visulaisation for the  single qubit is done
-Note:
-For assignment 1 the plots are not visible in the github of the run colab notebook but when ran on colab is accessible. I am attaching the png for the one as an example.They are also saved as reconstruction.npy
+# Assignment 2 – ML-Based Quantum State Reconstruction
 
-Refer to the Original Here[Project Outline](https://jajapuramshivasai.github.io/Open_Project_Winter_2025/) for the detailed schedule, prerequisites, and resource links.
+## Overview
+
+This assignment introduces supervised machine learning for reconstructing quantum states from measurement data. The objective is to map measurement statistics to density matrices using classical regression models.
+
+The workflow demonstrates how ML can approximate quantum state tomography (QST) in a data-driven manner.
+
+---
+
+## Problem Statement
+
+Given measurement statistics from quantum experiments, reconstruct the underlying quantum state (density matrix).
+
+This involves:
+
+- Preparing labelled datasets of measurement outcomes
+- Encoding features appropriately
+- Training a regression model
+- Evaluating reconstruction accuracy
+
+---
+
+## Methodology
+
+1. Generate synthetic quantum states.
+2. Simulate measurement statistics.
+3. Encode measurement data into feature vectors.
+4. Train a regression model to predict density matrix elements.
+5. Evaluate reconstruction fidelity and error metrics.
+
+---
+
+## Metrics Used
+
+- Fidelity
+- L2 reconstruction error
+- Trace distance
+- Training loss
+
+---
+
+## Key Takeaways
+
+- ML can approximate tomography mappings efficiently.
+- Reconstruction accuracy depends on dataset quality and feature encoding.
+- This lays the foundation for scalable QST surrogates used in later assignments.
+
+---
+
+## Files
+
+- Trained model checkpoints (.pkl)
+- Reconstruction plots
+- Dataset files (.npy/.npz)
+
+
 
 
 
