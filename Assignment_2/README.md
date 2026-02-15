@@ -52,19 +52,20 @@ The trained model achieved the following performance metrics:
 
 **Fidelity**
 
-\[
-F(\rho, \sigma) = \left( \mathrm{Tr}\sqrt{\sqrt{\rho}\sigma\sqrt{\rho}} \right)^2
-\]
+F(ρ, σ) = ( Tr( sqrt( sqrt(ρ) σ sqrt(ρ) ) ) )²
 
-Measures similarity between two quantum states.
+Measures similarity between two quantum states.  
+Fidelity ranges from 0 to 1, where 1 indicates identical states.
+
+---
 
 **Trace Distance**
 
-\[
-T(\rho, \sigma) = \frac{1}{2} \|\rho - \sigma\|_1
-\]
+T(ρ, σ) = (1/2) || ρ − σ ||₁
 
-Measures distinguishability between two density matrices.
+Measures distinguishability between two density matrices.  
+Lower values indicate closer agreement.
+
 
 ---
 
@@ -80,6 +81,5 @@ Measures distinguishability between two density matrices.
 ## Files Included
 
 - Trained model checkpoints (.pkl)
-- Reconstruction plots
-- Dataset files (.npy/.npz)
 - Performance metrics summary
+
