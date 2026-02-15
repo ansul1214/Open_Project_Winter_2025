@@ -1,0 +1,186 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Machine Learning Assisted Quantum State Tomography \\ 
+and Hybrid HHL Verification}
+\author{Open Project Winter 2025}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This project investigates machine learning-assisted quantum state tomography and its role in hybrid verification workflows for quantum algorithms. Across Assignments 1–5, we develop a structured pipeline combining quantum state simulation, supervised reconstruction, Pauli-basis tomography, quantum channel classification, and HHL-style linear system solving. The final stage integrates machine-learned tomography as a verification layer for amplitude-level quantum solutions. Scalability behavior and practical limitations are analyzed throughout.
+\end{abstract}
+
+% ============================================================
+\section{Introduction}
+
+Quantum algorithms promise asymptotic advantages for structured computational tasks such as linear system solving. However, practical deployment requires efficient reconstruction and verification mechanisms. 
+
+In particular:
+\begin{itemize}
+    \item Quantum State Tomography (QST) scales exponentially.
+    \item Amplitude-encoded solutions cannot be directly inspected on hardware.
+    \item Measurement overhead may negate theoretical speedups.
+\end{itemize}
+
+This project studies how machine learning can assist quantum state reconstruction and hybrid validation workflows.
+
+% ============================================================
+\section{Methodology}
+
+The project progresses through five structured stages.
+
+% ------------------------------------------------------------
+\subsection{Assignment 1 – Quantum State Simulation Framework}
+
+Quantum states were prepared using Qiskit's statevector formalism and converted to density matrices via:
+
+\[
+\rho = |\psi\rangle \langle \psi|
+\]
+
+Measurement simulations were performed to compute expectation values. Fidelity was used to quantify similarity:
+
+\[
+F(\rho, \sigma) = \left( \mathrm{Tr}\sqrt{\sqrt{\rho}\sigma\sqrt{\rho}} \right)^2
+\]
+
+This assignment established the numerical simulation and evaluation backbone.
+
+% ------------------------------------------------------------
+\subsection{Assignment 2 – ML-Based Quantum State Reconstruction}
+
+Synthetic pure states were generated and measurement statistics encoded into feature vectors. Density matrices were flattened into regression targets.
+
+A supervised regression model was trained to learn:
+
+\[
+\text{Measurement Statistics} \rightarrow \rho
+\]
+
+Performance was evaluated using:
+
+\[
+T(\rho, \sigma) = \frac{1}{2} \|\rho - \sigma\|_1
+\]
+
+Results:
+
+Mean Fidelity = 0.7586 \\
+Mean Trace Distance = 0.3993 \\
+Inference Latency = 0.0049 s
+
+This demonstrates efficient but approximate ML-based reconstruction.
+
+% ------------------------------------------------------------
+\subsection{Assignment 3 – Pauli-Basis Tomography and Surrogate Training}
+
+The Pauli operator expansion was implemented:
+
+\[
+\rho = \frac{1}{2^n} \sum_i \langle P_i \rangle P_i
+\]
+
+Expectation values were used as features to train a Ridge regression surrogate. The trained model was saved as \texttt{qst.pkl}.
+
+Scalability experiments were conducted for 1–5 qubits.
+
+\input{results/scalability_table.tex}
+
+Fidelity decreases with qubit count, indicating reconstruction degradation under fixed model capacity.
+
+An ablation study examined the impact of circuit depth.
+
+\input{results/ablation_table.tex}
+
+% ------------------------------------------------------------
+\subsection{Assignment 4 – Quantum Channel Classification}
+
+Quantum channels were represented via Choi matrices derived from Kraus operators. Real and imaginary components were flattened into 32-dimensional feature vectors.
+
+A Random Forest classifier achieved perfect accuracy.
+
+\input{results/classification_table.tex}
+
+This demonstrates strong separability in Choi space.
+
+% ------------------------------------------------------------
+\subsection{Assignment 5 – HHL Workflow and ML-Based Verification}
+
+A well-conditioned Hermitian matrix $A$ was defined and the linear system $Ax=b$ solved classically.
+
+A normalized quantum-style solution vector emulated ideal HHL output.
+
+Global phase alignment was applied:
+
+\[
+\psi_{aligned} = \psi e^{-i \arg(\langle \psi | x_{classical} \rangle)}
+\]
+
+Pauli expectation values were computed from the HHL state and passed through the trained QST surrogate to reconstruct the density matrix.
+
+The dominant eigenstate was extracted and compared using:
+
+\begin{itemize}
+    \item L2 error
+    \item Relative error
+    \item Residual norm
+    \item Fidelity comparisons
+\end{itemize}
+
+Fidelity between classical, HHL, and QST solutions approaches unity, confirming reconstruction consistency.
+
+% ============================================================
+\section{Results Summary}
+
+\input{results/results_table.tex}
+
+Key observations:
+
+\begin{itemize}
+    \item ML-based tomography provides fast inference.
+    \item Fidelity decreases as qubit count increases.
+    \item Channel classification achieves perfect accuracy.
+    \item Hybrid HHL verification demonstrates amplitude-level consistency.
+\end{itemize}
+
+% ============================================================
+\section{Scalability and Limitations}
+
+While theoretical HHL complexity scales logarithmically in dimension, practical limitations arise from:
+
+\begin{itemize}
+    \item Circuit depth growth with precision
+    \item Sensitivity to matrix conditioning
+    \item Measurement overhead from tomography
+    \item Regression model generalization limits
+\end{itemize}
+
+Fidelity degradation in Assignment 3 highlights exponential state growth challenges.
+
+Full-state tomography introduces classical overhead that may erode theoretical speedups.
+
+% ============================================================
+\section{Conclusion}
+
+This project demonstrates how machine learning-assisted tomography can support hybrid quantum-classical workflows. 
+
+While theoretical advantages exist for quantum linear solvers, practical deployment depends critically on efficient state reconstruction and verification mechanisms.
+
+Future directions include:
+
+\begin{itemize}
+    \item Noise-aware surrogate training
+    \item Compressed sensing tomography
+    \item Observable-based verification instead of full state reconstruction
+\end{itemize}
+
+\end{document}
